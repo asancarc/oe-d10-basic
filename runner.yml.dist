@@ -2,15 +2,15 @@ drupal:
     root: web
     base_url: '${env.DRUPAL_BASE_URL}'
     site:
-        profile: token_project_profile
+        profile: standard
         name: token_project_name
         generate_db_url: false
         default_theme: olivero
-        mail: token_project_email
+        mail: '${env.DRUPAL_ACCOUNT_EMAIL}'
     account:
         name: '${env.DRUPAL_ACCOUNT_USERNAME}'
         password: '${env.DRUPAL_ACCOUNT_PASSWORD}'
-        mail: token_project_email
+        mail: '${env.DRUPAL_ACCOUNT_EMAIL}'
     post_install:
         - "./vendor/bin/drush theme:enable olivero"
         - "./vendor/bin/drush config-set system.theme default olivero -y"
@@ -77,10 +77,17 @@ toolkit:
         dist:
             commands:
                 - { task: copy, from: ./resources/monolog.services.yml, to: 'dist/${drupal.root}/sites/default/monolog.services.yml' }
+                - { task: copy, from: lib/modules, to: 'dist/${drupal.root}/modules/custom' }
+                - { task: copy, from: lib/themes, to: 'dist/${drupal.root}/themes/custom' }
+                - { task: copy, from: lib/profiles, to: 'dist/${drupal.root}/profiles/custom' }
         dev:
             commands:
                 - { task: run, command: 'drupal:setup-test' }
                 - { task: symlink, from: "../../../resources/monolog.services.yml", to: "${drupal.root}/sites/default/monolog.services.yml" }
+                - { task: "symlink", from: "../../lib/modules", to: "${drupal.root}/modules/custom" }
+                - { task: "symlink", from: "../../lib/themes", to: "${drupal.root}/themes/custom" }
+                - { task: "symlink", from: "../../lib/profiles", to: "${drupal.root}/profiles/custom" }
+                - { task: run, command: 'drupal:setup-test' }
 commands:
   drupal:setup-test:
   - { task: process, source: behat.yml.dist, destination: behat.yml }
