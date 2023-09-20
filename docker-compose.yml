@@ -6,23 +6,20 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ${PWD}:${PWD}
-      # - $HOME/.composer/.auth.json:$HOME/.composer/.auth.json
+      - ${PWD}:${PWD}      
     environment:
-      DOCUMENT_ROOT: ${PWD}
-      # By leaving these variables empty Docker Compose will set them to their host values.
+      DOCUMENT_ROOT: ${PWD}/web      
       NEXTCLOUD_USER:
       NEXTCLOUD_PASS:
       GITHUB_API_TOKEN:
       GITLAB_API_TOKEN:
       QA_API_BASIC_AUTH:
-      QA_WEBSITE_URL:
+      QA_WEBSITE_URL:ENV: "development"
+      PHP_MEMORY_LIMIT: "512M"
       # XDEBUG CONFIGURATION.
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9003 remote_enable=1
+      XDEBUG_CONFIG: idekey=PHPSTORM client_port=9003 client_host=172.17.0.1 log=/tmp/xdebug.log
+      XDEBUG_MODE: debug
       PHP_IDE_CONFIG: "serverName=Docker"
-      # For Xdebug setup, run this command in the terminal:
-      # For Mac users: sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
-      # For Linux users: sudo ip addr add 10.254.254.254/32 dev lo label lo:1
     env_file:
       - .env
 
