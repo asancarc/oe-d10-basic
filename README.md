@@ -1,10 +1,17 @@
-# token_project_name
+# oe-d10-basic
 
 [![Build Status](https://drone.fpfis.eu/api/badges/token_vendor/token_project_id-reference/status.svg)](https://drone.fpfis.eu/token_vendor/token_project_id-reference)
 
-<p>token_project_description</p>
+<p>Drupal 10 standard profile from OE Subsite</p>
 
-This is an example, feel free to drop it and customize as you need.
+## Updates in this project
+
+- To start with this project you can execute firts-time.sh script.
+
+- You can execute more commands with script-master.sh (inside web bash).
+
+- In the .vscode folder you have information to configure debug with Visual Studio Code.
+
 
 ## 1. Development
 
